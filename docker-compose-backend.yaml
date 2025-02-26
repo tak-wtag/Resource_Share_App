@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Resource/Dockerfile.dev
+    networks:
+      - my-network
+      - my-network-db
+    working_dir: /code
+    depends_on:
+      - postgres
+      - redis
+    restart: on-failure
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=root
+      - DB_PASSWORD=1234
+      - DB_NAME=crud_db
+      - DB_PORT=5432
+    ports:
+      - "8000:8000"
+  redis:
+    image: redis:latest
+    restart: on-failure
+    ports:
+      - "6379:6379"
+    command: redis-server
+    volumes:
+      - ~/apps/cache:/data
+    networks:
+      - my-network-db
+    environment:
+      - REDIS_SERVER=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+
+  
+  postgres:
+    image: postgres:14-alpine
+    networks:
+      - my-network-db
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=root
+      - POSTGRES_DB=crud_db
+networks:
+  my-network:
+    driver: bridge
+  my-network-db:
+    driver: bridge
