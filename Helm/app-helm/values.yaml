@@ -1,0 +1,12 @@
+app:
+  name: frontend-deployment-helm
+  replicaCount: 1
+  label: web
+  container:
+    name: resource-sharing-app-frontend
+    image: joty46/resource_sharing_app-frontend:v4
+    port: 3030
+  service:
+    name: frontend-cluster-ip-service-helm
+    type: ClusterIP
+    port: 3030
