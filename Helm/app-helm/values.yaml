@@ -4,7 +4,7 @@ app:
   label: web
   container:
     name: resource-sharing-app-frontend
-    image: joty46/resource_sharing_app-frontend:v4
+    image: joty46/resource_sharing_app-frontend:v5
     port: 3030
   service:
     name: frontend-cluster-ip-service-helm

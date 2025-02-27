@@ -6,24 +6,28 @@ helmBinary: "/usr/local/bin/helm"
 releases:
   - name: db-release
     chart: bitnami/postgresql
-    namespace: resource
+    namespace: ops-test
+    createNamespace: false
     values:
       - ./values.yaml
 
   - name: resource-frontend
     chart: ./app-helm
-    namespace: resource
+    namespace: ops-test
+    createNamespace: false
     values:
       - ./app-helm/values.yaml
 
   - name: resource-backend 
     chart: ./resource-helm-chart
-    namespace: resource
+    namespace: ops-test
+    createNamespace: false
     values:
       - ./resource-helm-chart/values.yaml
+
   - name: resource-ingress 
     chart: ./ingress
-    namespace: resource
+    namespace: ops-test
+    createNamespace: false
     values:
       - ./ingress/values.yaml
-  
