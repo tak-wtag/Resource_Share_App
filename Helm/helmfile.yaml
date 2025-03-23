@@ -6,6 +6,7 @@ helmBinary: "/usr/local/bin/helm"
 releases:
   - name: db-release
     chart: bitnami/postgresql
+    version: 12.8.5
     namespace: ops-test
     createNamespace: false
     values:
