@@ -1,34 +1,43 @@
 repositories:
   - name: bitnami
     url: https://charts.bitnami.com/bitnami
+  - name: ingress-nginx
+    url: https://kubernetes.github.io/ingress-nginx
 
 helmBinary: "/usr/local/bin/helm" 
 releases:
   - name: db-release
     chart: bitnami/postgresql
-    version: 12.8.5
-    namespace: ops-test
-    createNamespace: false
+    namespace: resource
     values:
       - ./values.yaml
 
   - name: resource-frontend
     chart: ./app-helm
-    namespace: ops-test
-    createNamespace: false
+    namespace: resource
     values:
       - ./app-helm/values.yaml
 
+  - name: resource-redis-bitnami
+    chart: bitnami/redis
+    version: 17.13.2
+    namespace: resource
+    values:
+      - ./redis-value.yaml 
   - name: resource-backend 
     chart: ./resource-helm-chart
-    namespace: ops-test
-    createNamespace: false
+    namespace: resource
     values:
       - ./resource-helm-chart/values.yaml
-
   - name: resource-ingress 
     chart: ./ingress
-    namespace: ops-test
-    createNamespace: false
+    namespace: resource
     values:
       - ./ingress/values.yaml
+  - name: resource-ingress-helm 
+    chart: ingress-nginx/ingress-nginx
+    namespace: resource
+    values:
+      - ./ingressvalue.yaml
+  
+  

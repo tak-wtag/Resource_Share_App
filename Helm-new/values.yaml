@@ -10,9 +10,4 @@ persistence:
 volumePermissions:
   enabled: true
 
-image:
-  registry: docker.io
-  repository: postgres
-  tag: 15.11
-
   

@@ -1,0 +1,27 @@
+architecture: standalone
+auth:
+  enabled: false
+  sentinel: false
+commonLabels:
+  app: redis  # Used in Prometheus service discovery
+networkPolicy:
+  enabled: false
+metrics:
+  enabled: false
+commonConfiguration: |-
+  # Enable AOF https://redis.io/topics/persistence#append-only-file
+  appendonly yes
+  # Enable RDB persistence
+  save 60 20
+  # Set proper latency config https://redis.io/topics/latency
+  appendfsync no
+master:
+  persistence:
+    enabled: true
+    path: /data
+    size: 1Gi
+    storageClass: "hostpath"
+  resources:
+    requests:
+      cpu: 15m
+      memory: 15Mi
